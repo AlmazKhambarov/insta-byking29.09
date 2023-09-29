@@ -1,0 +1,46 @@
+/** @format */
+
+.seting-user {
+  top: 20%;
+  left: 0;
+  right: 0;
+  // this is sttyyadawd
+  margin: auto;
+  position: fixed;
+  width: 60%;
+  // this is sttyyadawd
+  max-width: 600px;
+  height: 300px;
+  background-color: #fff;
+  // this is sttyyadawd
+  display: flex;
+  //   align-items: center;
+  text-align: end;
+  // justify-content: center;
+  flex-direction: column;
+  // this is sttyyadawd
+  text-align: center;
+  z-index: 10;
+  // this is sttyyadawd
+  .close-btn {
+    font-size: 30px;
+    text-align: end;
+    // thisssss
+    cursor: pointer;
+    margin-right: 5px;
+    // thisssss
+  }
+  .update-user-container {
+    margin: auto;
+    // thisssss
+    width: 70%;
+    input {
+      width: 100%;
+      margin-top: 12px !important;
+    }
+    button {
+      // thisssss
+      margin-top: 5px !important;
+    }
+  }
+}
