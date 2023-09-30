@@ -1,46 +1,58 @@
 /** @format */
 
-.seting-user {
+.user_setting {
+  position: fixed;
   top: 20%;
   left: 0;
   right: 0;
-  // this is sttyyadawd
   margin: auto;
-  position: fixed;
   width: 60%;
-  // this is sttyyadawd
-  max-width: 600px;
   height: 300px;
+  max-width: 600px;
+  z-index: 10;
   background-color: #fff;
-  // this is sttyyadawd
   display: flex;
   //   align-items: center;
   text-align: end;
   // justify-content: center;
   flex-direction: column;
-  // this is sttyyadawd
   text-align: center;
-  z-index: 10;
-  // this is sttyyadawd
   .close-btn {
     font-size: 30px;
     text-align: end;
-    // thisssss
     cursor: pointer;
     margin-right: 5px;
-    // thisssss
   }
   .update-user-container {
     margin: auto;
-    // thisssss
     width: 70%;
     input {
       width: 100%;
       margin-top: 12px !important;
     }
     button {
-      // thisssss
       margin-top: 5px !important;
+    }
+    .user__profile__container{
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 1px solid;
+      img{
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+    }
+    .user__upload__container{
+      position: relative;
+      label{
+        font-size: 40px;
+        position: absolute;
+        top: -42px;
+        left: 55px;
+        cursor: pointer;
+      }
     }
   }
 }

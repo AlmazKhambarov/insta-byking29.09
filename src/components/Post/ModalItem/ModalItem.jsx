@@ -3,43 +3,70 @@
 import React, { useState } from "react";
 import "./ModalItem.scss";
 import { useDispatch } from "react-redux";
-import { updateDisplayNameAsync } from "../../../redux/extraReducer";
-const ModalItem = ({ setUserSetting }) => {
-  // this is func too
+import { chaneg, changeUserProfile, updateDisplayNameAsync } from "../../../redux/extraReducer";
+import { DateRange } from "@mui/icons-material";
+const ModalItem = ({ setUserSetting, userPhoto, userName, user}) => {
   const [newDisplayName, setDisplayName] = useState("");
+  const [userImage, setUserImage] = useState(userPhoto);
   var dispatch = useDispatch();
-  // this is func too
   const handleUpdate = (e) => {
     e.preventDefault();
     console.log(newDisplayName);
 
-    // this is func too
     dispatch(updateDisplayNameAsync(newDisplayName));
-
-    // this is func too
-    // alert("Done");
   };
+  const [data, setData] = useState({
+    img: userPhoto,
+    username: userName,
+    user:user
+  });
+
+  const handleProfileImageChange = (e) => {
+    // setData((prev) => ({ ...prev, img: e.target.files[0] }));
+
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setData((prev)=>({...prev, img:reader.result}))
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const pushing = (e)=>{
+    e.preventDefault()
+    dispatch(chaneg(data))
+  }
   return (
     <>
-      <div className='seting-user'>
+      <div className='user_setting'>
         <span className='close-btn' onClick={() => setUserSetting(false)}>
           x
         </span>
-        {/* this is good */}
-        <form className='update-user-container' onSubmit={handleUpdate}>
+        <form className='update-user-container' onSubmit={pushing}>
+          <div className='user__profile__container'>
+            <img src={data.img} alt='' />
+          </div>
+          <div className='user__upload__container'>
+            <label for='upload'>+</label>
+            <input
+              type='file'
+              id='upload'
+              onChange={handleProfileImageChange}
+              style={{ display: "none" }}
+            />
+          </div>
           <input
-          // this is good
             type='text'
             placeholder='UserName'
             id=''
-            onChange={(e) => setDisplayName(e.target.value)}
+            value={data.username}
+            onChange={(e) =>
+              setData((prev) => ({ ...prev, username: e.target.value }))
+            }
           />
-          {/* this is good */}
-          <input type='text' name='' placeholder='email' id='' />
-          <input type='text' name='' placeholder='Password' id='' />
+
           <button className='btn' type='submit'>
-          {/* this is good */}
-            Submit
+            Save
           </button>
         </form>
       </div>

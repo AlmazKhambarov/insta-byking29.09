@@ -12,7 +12,7 @@ import { auth, firestore, storage } from "../Api/firebase";
 import { toHaveErrorMessage } from "@testing-library/jest-dom/dist/matchers";
 import { errorMessage } from "./loginSlice/loginSlice";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { Timestamp, addDoc, collection, getDocs, query, where } from "firebase/firestore";
 export const createUser = createAsyncThunk(
   "user/createUserAndProfile",
   async (data, thunkAPI) => {
@@ -124,3 +124,34 @@ export const updateDisplayNameAsync = createAsyncThunk(
     }
   }
 );
+
+export const chaneg = createAsyncThunk(
+  'user/changeProfile',
+  async (data, { rejectWithValue }) => {
+    console.log(data)
+    try {
+      await updateProfile(auth.currentUser, {
+        displayName: data.username,
+        photoURL: data.img,
+      });
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getUserPost = createAsyncThunk
+    (
+        'folders/get',
+        async (userId, { rejectWithValue }) => {
+            try {
+                const filesRef = collection(firestore, 'Articles');
+                const userFolder = query(filesRef, where('userId', '==', userId));
+                const snapshot = await getDocs(userFolder);
+                const posts = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+                return posts;
+            } catch (error) {
+                return rejectWithValue(error.message);
+            }
+        }
+    );
