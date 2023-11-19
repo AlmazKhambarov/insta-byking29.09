@@ -5,13 +5,13 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBBmcuXxJ8idotfbP5NGQEahbRhCGCYMxo",
-    authDomain: "instagram-madina.firebaseapp.com",
-    projectId: "instagram-madina",
-    storageBucket: "instagram-madina.appspot.com",
-    messagingSenderId: "184707432378",
-    appId: "1:184707432378:web:ddd24af84a90199aeae783",
-    measurementId: "G-Z7M230LR2W"
+    apiKey: "AIzaSyBuEWdiuwlihbwRBRiMUCBEddsSO59zBp8",
+    authDomain: "madina-9f9f6.firebaseapp.com",
+    projectId: "madina-9f9f6",
+    storageBucket: "madina-9f9f6.appspot.com",
+    messagingSenderId: "360312760912",
+    appId: "1:360312760912:web:d68aaff9c20b7b3a38bf55",
+    measurementId: "G-GDVNWJD1SY"
 };
 
 

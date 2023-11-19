@@ -145,24 +145,31 @@
     .img__container{
       height: 200px;
       width: 200px;
+      position: relative;
+      padding: 3px;
+      svg{
+        cursor: pointer;
+        color: red;
+        font-size: 20px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        display: none;
+      }
   cursor: pointer;
       img{
         width: 100%;
       }
     }
+    .img__container:hover{
+      svg{
+        cursor: pointer;
+        display: flex;
+      }
+    }
   }
 
-  .gallery-item:hover .gallery-item-info,
-  .gallery-item:focus .gallery-item-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    // width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-  }
+  
 
   // this is style for user panel
   .gallery-item-info {
@@ -190,10 +197,7 @@
   }
   // this is style for user panel
 
-  .fa-clone,
-  .fa-comment {
-    transform: rotateY(180deg);
-  }
+
 
   .gallery-image {
     // this is style for user panel

@@ -5,14 +5,14 @@ import "./CreatePost.scss";
 import { Label } from "@mui/icons-material";
 import { publishPosts } from "../../../redux/extraReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 const CreatePost = ({ setModalState, user }) => {
   const { postLoading } = useSelector((state) => state.posts);
   var dispatch = useDispatch();
   // this is func
   const [data, setData] = useState({
-    // this is func
     user: user,
-    title: "title",
     imageUpload: "",
     description: "",
     // this is func
@@ -34,47 +34,44 @@ const CreatePost = ({ setModalState, user }) => {
   };
 
   const publishPost = () => {
-    if (data.title != null) {
+    if (data.description != null) {
       dispatch(publishPosts(data));
     }
   };
+
   return (
     <>
       {postLoading ? (
         <h2>Loading...</h2>
       ) : (
         <>
-          <div className="modal-container">
+          <div className='modal-container'>
+            <div className='close'>
+              <FontAwesomeIcon
+                icon={faClose}
+                onClick={() => setModalState(false)}
+              />
+            </div>
             {selected ? (
-              <button className="btn " onClick={publishPost}>
+              <button className='btn ' onClick={publishPost}>
                 Publish
               </button>
             ) : null}
             <div>
               {selected ? (
                 <>
-                  <div className="selected__img__container">
+                  <div className='selected__img__container'>
                     {/* this is create modal for insta */}
                     {/* this issss */}
-                    <img src={selectedImg} alt="" />
+                    <img src={selectedImg} alt='' />
                   </div>
                   <form>
-                    <label>title</label>
-                    <input
-                      placeholder="title"
-                      type="text"
-                      // this is create modal for insta
-                      className="form-controller"
-                      onChange={(e) =>
-                        setData((prev) => ({ ...prev, title: e.target.value }))
-                      }
-                    />
                     <label>Description</label>
                     <input
-                      placeholder="Description"
-                      type="text"
-                      className="form-controller"
-                      // this issss
+                      placeholder='Description'
+                      type='text'
+                      className='form-controller'
+                      required
                       onChange={(e) =>
                         setData((prev) => ({
                           ...prev,
@@ -84,28 +81,27 @@ const CreatePost = ({ setModalState, user }) => {
                     />
                   </form>
                   <button
-                    className="btn"
+                    className='btn'
                     style={{ background: "red" }}
                     // this issss
-                    onClick={() => setModalState(false)}
-                  >
+                    onClick={() => setModalState(false)}>
                     Cancel
                   </button>
                 </>
               ) : (
                 <>
-                  <label htmlFor="">Select from compyter</label>
+                  <label htmlFor=''>Select from compyter</label>
                   <input
-                    type="file"
+                    type='file'
                     onChange={handleFileChange}
                     // this issss
-                    accept="image/*"
+                    accept='image/*'
                   />
                 </>
               )}
             </div>
           </div>
-          <div className="w-screen"></div>
+          <div className='w-screen'></div>
         </>
       )}
     </>

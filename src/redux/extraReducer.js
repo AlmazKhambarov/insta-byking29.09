@@ -12,7 +12,18 @@ import { auth, firestore, storage } from "../Api/firebase";
 import { toHaveErrorMessage } from "@testing-library/jest-dom/dist/matchers";
 import { errorMessage } from "./loginSlice/loginSlice";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { Timestamp, addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import {
+  Timestamp,
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 export const createUser = createAsyncThunk(
   "user/createUserAndProfile",
   async (data, thunkAPI) => {
@@ -21,7 +32,6 @@ export const createUser = createAsyncThunk(
       const user = await createUserWithEmailAndPassword(
         auth,
         data.email,
-        // thisssss dapsdjao[ifhufhsafg]
         data.password
       );
       const usersData = {
@@ -35,7 +45,8 @@ export const createUser = createAsyncThunk(
         // thisssss dapsdjao[ifhufhsafg]
         displayName: data.name,
         photoURL: data.photo,
-        phoneNumber:data.phone
+        phoneNumber: data.phone,
+        followers: [],
       });
 
       return user;
@@ -60,12 +71,29 @@ export const UserLogin = createAsyncThunk("login", async (data, thunkAPI) => {
     console.log(error);
   }
 });
+export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
+  const userRef = collection(firestore, "Users");
+  const q = query(userRef, orderBy("userPhoto", "asc"));
 
+  return new Promise((resolve, reject) => {
+    onSnapshot(
+      q,
+      (snapshot) => {
+        const usersR = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        resolve(usersR);
+      },
+      reject
+    );
+  });
+});
 // thisssss dapsdjao[ifhufhsafg]
 export const publishPosts = createAsyncThunk(
   "posts/publish",
   async (data, thunkAPI) => {
-    const { title, imageUpload, user, description } = data;
+    const {  imageUpload, user, description } = data;
     // thisssss dapsdjao[ifhufhsafg]
     try {
       const storageRef = ref(
@@ -82,7 +110,6 @@ export const publishPosts = createAsyncThunk(
       const url = await getDownloadURL(uploadImage.snapshot.ref);
 
       const articleData = {
-        title: title,
         description: description,
         // thisssss dapsdjao[ifhufhsafg]
         imageUrl: url,
@@ -94,7 +121,7 @@ export const publishPosts = createAsyncThunk(
         comments: [],
       };
 
-      const articleRef = collection(firestore, "Articles");
+      const articleRef = collection(firestore, "Posts");
       // thisssss dapsdjao[ifhufhsafg]
       await addDoc(articleRef, articleData);
 
@@ -126,9 +153,9 @@ export const updateDisplayNameAsync = createAsyncThunk(
 );
 
 export const chaneg = createAsyncThunk(
-  'user/changeProfile',
+  "user/changeProfile",
   async (data, { rejectWithValue }) => {
-    console.log(data)
+    console.log(data);
     try {
       await updateProfile(auth.currentUser, {
         displayName: data.username,
@@ -140,18 +167,35 @@ export const chaneg = createAsyncThunk(
   }
 );
 
-export const getUserPost = createAsyncThunk
-    (
-        'folders/get',
-        async (userId, { rejectWithValue }) => {
-            try {
-                const filesRef = collection(firestore, 'Articles');
-                const userFolder = query(filesRef, where('userId', '==', userId));
-                const snapshot = await getDocs(userFolder);
-                const posts = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-                return posts;
-            } catch (error) {
-                return rejectWithValue(error.message);
-            }
-        }
-    );
+export const getUserPost = createAsyncThunk(
+  "folders/get",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const filesRef = collection(firestore, "Posts");
+      const userFolder = query(filesRef, where("userId", "==", userId));
+      const snapshot = await getDocs(userFolder);
+      const posts = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      console.log(posts)
+      return posts;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+
+export const deletePost = createAsyncThunk("Delete", async (payload) => {
+  console.log(payload);
+
+  // const storageRef = ref(storage, payload.name);
+
+  // Check if the file exists before attempting to delete it
+  try {
+  
+    await deleteDoc(doc(firestore, "Posts", payload.id));
+
+    console.log("Document deleted successfully");
+  } catch (error) {
+    console.error("Error deleting file or document:", error);
+  }
+});

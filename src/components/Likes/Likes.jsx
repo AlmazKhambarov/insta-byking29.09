@@ -5,7 +5,7 @@ import { auth, firestore } from "../../Api/firebase";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 const Likes = ({ likes, id }) => {
   const [user, setUser] = useState();
-  const likesRef = doc(firestore, "Articles", id);
+  const likesRef = doc(firestore, "Posts", id);
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setUser(user);

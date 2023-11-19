@@ -10,29 +10,51 @@ import Register from "./Auth/Register/Register";
 import User from "./components/User/User";
 import { useState } from "react";
 import { auth } from "./Api/firebase";
+import UserProfile from "./components/UserProfile/UserProfile";
 // this is comment too
 
 function App() {
   const [user, setUser] = useState();
-  auth.onAuthStateChanged((user) => setUser(user));
+  auth.onAuthStateChanged((user) => {
+    setUser(user)
+    localStorage.setItem("currentUser", JSON.stringify(user));
+  });
+
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
   return (
     <>
       <Routes>
-        <Route path="/" element={!user ? <Login /> : <Home user={user} />} />
-        {/* this is comment for app */}
         <Route
-          path="/sign-in"
-          element={user ? <a href="/home">Back to Home Page</a> : <Register />}
+          path='/'
+          element={!currentUser ? <Login /> : <Home user={user} />}
         />
         {/* this is comment for app */}
-        <Route path="/home" element={user ? <Home user={user} /> : null} />
         <Route
-          path="/profile"
+          path='/sign-in'
+          element={
+            currentUser ? <a href='/home'>Back to Home Page</a> : <Register />
+          }
+        />
+        {/* this is comment for app */}
+        <Route
+          path='/home'
+          element={currentUser ? <Home user={user} /> : null}
+        />
+        <Route
+          path='/profile'
           // this is comment for app
           element={
-            user ? <User user={user} /> : <a href="/">Back to Login page</a>
+            currentUser ? (
+              <User user={user} />
+            ) : (
+              <a href='/'>Back to Login page</a>
+            )
           }
-          // this is comment for app
+        />
+        <Route
+          path='/user/:id'
+          element={currentUser ? <UserProfile user={user}/> : null}
         />
       </Routes>
     </>

@@ -5,22 +5,32 @@
   bottom: 0;
   left: 0;
   background-color: #fff;
-  // tis is style 
+  // tis is style
   max-width: 600px;
   right: 0;
-  // tis is style 
+  // tis is style
   z-index: 10;
   width: 60%;
   display: flex;
   margin: auto;
-  // tis is style 
+  // tis is style
   align-items: center;
   // justify-content: center;
   height: 500px;
-  // tis is style 
-  // tis is style 
+  // tis is style
+  // tis is style
   flex-direction: column;
   text-align: center;
+  .close {
+    position: relative;
+    svg {
+      position: absolute;
+      top: -3px;
+      left: 308px;
+      cursor: pointer;
+      font-size: 47px;
+    }
+  }
   .selected__img__container {
     img {
       width: 100%;
@@ -34,8 +44,8 @@
   height: 100%;
   position: fixed;
   z-index: 1;
-  // tis is style 
+  // tis is style
   top: 0;
   left: 0;
 }
-// tis is style 
+// tis is style

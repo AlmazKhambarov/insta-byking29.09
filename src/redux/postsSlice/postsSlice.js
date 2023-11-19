@@ -2,14 +2,16 @@
 // this is comment toooooooooooooo
 
 import { createSlice } from "@reduxjs/toolkit";
-import { chaneg, getUserPost, publishPosts } from "../extraReducer";
+import { chaneg, deletePost, fetchUsers, getUserPost, publishPosts } from "../extraReducer";
 import { Flag, FlashOnTwoTone } from "@mui/icons-material";
 const initialState = {
   loading: null,
   error: null,
   postLoading: null,
-  isL:null,
-  userPost:[]
+  isL: null,
+  users: [],
+  userPost: [],
+  deletePo:false
 };
 
 const postsSlice = createSlice({
@@ -31,7 +33,7 @@ const postsSlice = createSlice({
         // this is comment toooooooooooooo
         state.error = action.error.message;
       });
-      builder
+    builder
       .addCase(chaneg.pending, (state, action) => {
         state.loading = true;
         // this is comment toooooooooooooo
@@ -46,7 +48,7 @@ const postsSlice = createSlice({
         state.error = action.error.message;
       });
 
-      builder
+    builder
       .addCase(getUserPost.pending, (state, action) => {
         state.loading = true;
         // this is comment toooooooooooooo
@@ -59,7 +61,33 @@ const postsSlice = createSlice({
         // this is comment toooooooooooooo
         state.error = action.error.message;
       });
+      builder
+      .addCase(deletePost.pending, (state, action) => {
+        state.deletePo = true
+        // this is comment toooooooooooooo
+      })
       // this is comment toooooooooooooo
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.deletePo = false
+      })
+      .addCase(deletePost.rejected, (state, action) => {
+        // this is comment toooooooooooooo
+        state.error = action.error.message;
+      });
+    builder
+      .addCase(fetchUsers.pending, (state, action) => {
+        state.loading = true;
+        // this is comment toooooooooooooo
+      })
+      // this is comment toooooooooooooo
+      .addCase(fetchUsers.fulfilled, (state, action) => {
+        state.users = action.payload;
+      })
+      .addCase(fetchUsers.rejected, (state, action) => {
+        // this is comment toooooooooooooo
+        state.error = action.error.message;
+      });
+    // this is comment toooooooooooooo
   },
 });
 export const {} = postsSlice.actions;
