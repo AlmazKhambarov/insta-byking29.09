@@ -55,7 +55,36 @@
     display: none;
   }
 }
-
+.inp-box{
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  input{
+    border: none;
+    width: 90%;
+    padding: 10px;
+    // width: 100%;
+  }
+  span{
+    font-size: 30px;
+  }
+  .reactions{
+    position: absolute;
+    bottom: 50px;
+    z-index: 99;
+    right: 0;
+    svg{
+      font-size: 30px;
+      position: absolute;
+      right: 1px;
+      top: -28px;
+      font-size: 30px;
+    }
+  }
+}
 .comments li {
   margin-bottom: 10px;
 }

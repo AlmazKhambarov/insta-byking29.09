@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./User.scss";
-import { confirmAlert } from 'react-confirm-alert';
+import { confirmAlert } from "react-confirm-alert";
 import SettingsIcon from "@mui/icons-material/Settings";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -13,12 +13,14 @@ import { auth } from "../../Api/firebase";
 import ModalItem from "../Post/ModalItem/ModalItem";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import "react-confirm-alert/src/react-confirm-alert.css";
 import { deletePost, fetchUsers, getUserPost } from "../../redux/extraReducer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashArrowUp } from "@fortawesome/free-solid-svg-icons";
 const User = ({ user }) => {
-  const { isL, userPost, users, deletePo} = useSelector((state) => state.posts);
+  const { isL, userPost, users, deletePo } = useSelector(
+    (state) => state.posts
+  );
   const navigate = useNavigate();
   const [userSetting, setUserSetting] = useState(false);
 
@@ -31,7 +33,7 @@ const User = ({ user }) => {
     dispatch(getUserPost(user?.uid));
     dispatch(fetchUsers());
   }, [user, deletePo]);
-  const theUser = users?.find((el) => el.userEmail  == user?.email);
+  const theUser = users?.find((el) => el.userEmail == user?.email);
   console.log(user);
   const handleClickConfirm = (id) => {
     confirmAlert({
@@ -40,7 +42,7 @@ const User = ({ user }) => {
       buttons: [
         {
           label: "Yes",
-          onClick: () => dispatch(deletePost({ id:id}))
+          onClick: () => dispatch(deletePost({ id: id })),
         },
         {
           label: "No",
@@ -137,6 +139,7 @@ const User = ({ user }) => {
                     </button>
 
                     <button
+                      onClick={() => setUserSetting(!userSetting)}
                       class=' profile-settings-btn'
                       aria-label='profile settings'>
                       <SettingsIcon />
@@ -150,7 +153,10 @@ const User = ({ user }) => {
                         <span class='profile-stat-count'>1</span> posts
                       </li>
                       <li>
-                        <span class='profile-stat-count'>{theUser?.followers?.length}</span> followers
+                        <span class='profile-stat-count'>
+                          {theUser?.followers?.length}
+                        </span>{" "}
+                        followers
                       </li>
                       <li>
                         <span class='profile-stat-count'>0</span> following
@@ -178,7 +184,10 @@ const User = ({ user }) => {
                   {userPost?.map((el) => (
                     <div class='gallery-item'>
                       <div className='img__container'>
-                        <FontAwesomeIcon icon={faTrashArrowUp} onClick={()=>handleClickConfirm(el.id)}/>
+                        <FontAwesomeIcon
+                          icon={faTrashArrowUp}
+                          onClick={() => handleClickConfirm(el.id)}
+                        />
                         <img src={el.imageUrl} class='gallery-image' alt='' />
                       </div>
 
